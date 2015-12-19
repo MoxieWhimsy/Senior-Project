@@ -3,9 +3,9 @@
 	if(!isAdmin($_SESSION['id']))
 		header ("../../index.php");
 
-	$username = clean_up($_POST["username"]);
-	$email = clean_up($_POST["email"]);
-	$admin = clean_up($_POST["admin"]);
+	$username = $_POST["username"];
+	$email = $_POST["email"];
+	$admin = $_POST["admin"];
 	$password = random_password(10);
 	/* Prepared statement, stage 1: prepare */
 	$link = connectDB();

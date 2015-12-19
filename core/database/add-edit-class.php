@@ -1,35 +1,28 @@
 <?php
-	require '../init.php';
-
-	$addnew = true;
-  if (isset($_GET['class_id'])) {
-    $class_id = clean_up($_GET['class_id']);
+  require '../init.php';
+  $addnew = true;
+  if (isset($_GET['class'])) {
+    $class_id = clean_up($_GET['class']);
     if($result = mysql_db_query("rowanprep", "SELECT * FROM classes WHERE class_id_key LIKE '$class_id'")) {
       $row = mysql_fetch_assoc($result);
       if (mysql_num_rows($result) !== 0) {
         $addnew = false;  
       }
     }
-	}
-  
-  $student = clean_up($_POST["student"]);
+  }
+  $class_name = clean_up($_POST["class_name"]);
   $teacher = clean_up($_POST["teacher"]);
-  $teacher_type = clean_up($_POST["teacher_type"]);
-  $duration = clean_up($_POST["duration"]);
+  $pay_rate = clean_up($_POST["pay_rate"]);
   $day = clean_up($_POST["day"]);
   $semester = clean_up($_POST["semester"]);
   $year = clean_up($_POST["year"]);
-  $instrument = clean_up($_POST["instrument"]);
-  $tuition_due = clean_up($_POST["tuition_due"]);
-  $total_class_ids = clean_up($_POST["total_class_ids"]);
-  $pay_rate = clean_up($_POST["pay_rate"]);
+  $total_number = clean_up($_POST["total_number"]);
   
   if ($addnew) {
-    $sql = "INSERT INTO classes (student, teacher, teacher_type, duration, day, semester, year, instrument, tuition_due, total_classes, pay_rate) VALUES ('$student', '$teacher', '$teacher_type', '$duration', '$day', '$semester', '$year', '$instrument', '$tuition_due', '$total_classes', '$pay_rate')";
+    $sql = "INSERT INTO classes (class_name, teacher, pay_rate, day, semester, year, total_number) VALUES ('$class_name', '$teacher', '$pay_rate', '$day', '$semester', '$year', '$total_number')";
   } else {
-    	$sql = "UPDATE classes SET student='$student', teacher='$teacher', teacher_type='$teacher_type', duration='$duration', day='$day', semester='$semester', year='$year', instrument='$instrument', tuition_due='$tuition_due', total_classes='$total_classes', pay_rate='$pay_rate' WHERE class_id = '$class_id'";
+      $sql = "UPDATE classes SET class_name='$class_name', teacher='$teacher', pay_rate='$pay_rate', day='$day', semester='$semester', year='$year', total_number='$total_number' WHERE class_id = '$class_id'";
   }
-
   $link = connectDB();
    $results = mysql_db_query("rowanprep", $sql);
    if(!$results) {
@@ -39,6 +32,4 @@
    else {
     header("Location:../../reports.php?tab=classes");
    }
-
-
 ?>

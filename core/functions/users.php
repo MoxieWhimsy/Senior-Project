@@ -154,7 +154,7 @@
 		}
 	}
 	function get_class_list() {
-		return $results = mysql_db_query("rowanprep", "SELECT * FROM classes");
+		return $results = mysql_db_query("rowanprep", "SELECT * FROM classes JOIN teachers ON teacher_key = teacher");
 
 	}
 	function get_class_student_list($key) {
